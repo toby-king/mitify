@@ -1,5 +1,5 @@
 {
-    "name": "DTF Extension",
+    "name": "Mitify",
     "description": "Extract all text from current web page and perform analysis",
     "version": "1.0.1",
     "manifest_version": 3,
@@ -16,5 +16,6 @@
     "host_permissions": [
         "*://*/*"
       ],
-    "background":{}
+    "background": {
+    }
 }
