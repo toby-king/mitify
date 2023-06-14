@@ -1,26 +1,98 @@
+::-webkit-scrollbar {
+    width: 5px;
+    height: 5px;
+}
+::-webkit-scrollbar-track {
+    -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+    -webkit-border-radius: 10px;
+    border-radius: 10px;
+}
+::-webkit-scrollbar-thumb {
+    -webkit-border-radius: 10px;
+    border-radius: 10px;
+    background: rgba(255, 255, 255, 0.3);
+    -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.5);
+}
+::-webkit-scrollbar-thumb:window-inactive {
+    background: rgba(255, 255, 255, 0.3);
+}
+@font-face {
+    font-family: "Oswald";
+    src: url("assets/fonts/Oswald-Regular.ttf");
+}
 body {
     padding: 1rem;
     margin: 0;
     padding: 0;
+    overflow: auto;
+    width: 300px;
 }
 .popup {
-    width:300px;
+    width: 300px;
     background-color: #F5F5F5;
     padding: 1rem;
 }
 * {
-    font-family: Arial, Helvetica, sans-serif;
+    font-family: "Oswald";
+}
+.header {
+    margin-bottom: .8rem;
 }
 .header img {
     max-width: 10%;
+    margin: 0 5px;
+}
+.header button {
+    all: unset;
+}
+.svgicon {
+    filter: invert(85%) sepia(7%) saturate(38%) hue-rotate(156deg) brightness(93%) contrast(92%);
+    max-width: 28px !important;
+}
+.svgicon.active {
+    filter: invert(42%) sepia(0%) saturate(277%) hue-rotate(256deg) brightness(94%) contrast(98%);
+}
+#more {
+    margin-left: 111px;
+}
+p {
+    margin-bottom: 0 !important;
+    font-size: 14px;
+}
+.stats-wrapper, .fk-wrapper {
+    background-color: #fff;
+    border-radius: 10px;
+    text-align: center;
+    padding: .5rem;
+}
+.stats-wrapper span {
+    font-size: 2rem;
+}
+#left {
+    padding-right: 5px !important;
+}
+#right {
+    padding-left: 5px !important;
 }
 .title {
     font-weight: bold;
-}
-p {
+    text-transform: uppercase;
+    font-size: .8rem;
+    text-align: center;
     margin-bottom: 0;
-    font-size: 14px;
 }
-.separator {
+#container {
+    margin: 20px;
+    width: 200px;
+    height: 100px;
+}
+#biasPage {
     display: none;
+}
+#noContent {
+    display: none;
+    background-color: #fff;
+    border-radius: 10px;
+    text-align: center;
+    padding: .5rem;
 }
