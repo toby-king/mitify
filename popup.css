@@ -59,7 +59,7 @@ p {
     margin-bottom: 0 !important;
     font-size: 14px;
 }
-.stats-wrapper, .fk-wrapper {
+.stats-wrapper, .fk-wrapper, .bias-wrapper, .poli-wrapper {
     background-color: #fff;
     border-radius: 10px;
     text-align: center;
@@ -81,10 +81,14 @@ p {
     text-align: center;
     margin-bottom: 0;
 }
-#container {
+#fk-container, #bias-container {
     margin: 20px;
     width: 200px;
     height: 100px;
+}
+#poli-container {
+    width: 250px;
+    height: 200px;
 }
 #biasPage {
     display: none;
