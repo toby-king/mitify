@@ -1,1 +1,3 @@
-# Mitify+ Chrome Extension
+# Mitify+
+
+Grammarly For Disinformation

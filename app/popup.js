@@ -248,7 +248,7 @@ async function getBias(text) {
   };
   
   try {
-    const response = await fetch("http://192.168.1.102:8000/article_whole/", requestOptions)
+    const response = await fetch("http://192.168.1.103:8000/article_whole/", requestOptions)
     const data = await response.json();
     const result_bias = data.bias.__ndarray__[0]; //Get the first Bias number
     const result_poli = data.type.__ndarray__;
