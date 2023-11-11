@@ -2,28 +2,52 @@
 window.addEventListener("DOMContentLoaded", (event) => {
   document.getElementById("showTextAnalysis").addEventListener("click", showTextAnalysis);
   document.getElementById("showBias").addEventListener("click", showBias);
+  document.getElementById("showImages").addEventListener("click", showImages);
 });
 function showTextAnalysis() {
   var x = document.getElementById("textAnalysisPage");
   var y = document.getElementById("biasPage");
-  var i = document.getElementById("textAnalysis")
-  var j = document.getElementById("bias")
+  var z = document.getElementById("imgPage");
+  var i = document.getElementById("textAnalysis");
+  var j = document.getElementById("bias");
+  var k = document.getElementById("image");
 
   x.style.display = "block";
   y.style.display = "none";
+  z.style.display = "none";
   i.classList.add("active");
   j.classList.remove("active");
+  k.classList.remove("active");
 }
 function showBias() {
   var x = document.getElementById("biasPage");
   var y = document.getElementById("textAnalysisPage");
-  var i = document.getElementById("textAnalysis")
-  var j = document.getElementById("bias")
+  var z = document.getElementById("imgPage");
+  var i = document.getElementById("textAnalysis");
+  var j = document.getElementById("bias");
+  var k = document.getElementById("image");
 
   x.style.display = "block";
   y.style.display = "none";
+  z.style.display = "none";
   j.classList.add("active");
   i.classList.remove("active");
+  k.classList.remove("active");
+}
+function showImages() {
+  var x = document.getElementById("imgPage");
+  var y = document.getElementById("textAnalysisPage");
+  var z = document.getElementById("biasPage");
+  var i = document.getElementById("textAnalysis");
+  var j = document.getElementById("bias");
+  var k = document.getElementById("image");
+
+  x.style.display = "block";
+  y.style.display = "none";
+  z.style.display = "none";
+  k.classList.add("active");
+  i.classList.remove("active");
+  j.classList.remove("active");
 }
 
 // progressbar.js@1.0.0 version is used
@@ -61,6 +85,7 @@ function displayFKScore(score) {
   
   bar.animate(score);  // Number from 0.0 to 1.0
 }
+
 function displayBias(score) {
   var bar = new ProgressBar.SemiCircle('#bias-container', {
     strokeWidth: 6,
@@ -94,6 +119,7 @@ function displayBias(score) {
   
   bar.animate(score);  // Number from 0.0 to 1.0
 
+  // Conclusions
   if (score > 0.5) {
     if (score > 0.75) {
       document.getElementById("bias-conclusion").innerHTML = "This article is very likely to contain bias";
@@ -138,6 +164,7 @@ function displayPoliticalBias(res_poli) {
 
     chart.render();
 
+    // Conclusions
     if (left > right && left > center) {
       document.getElementById("poli-conclusion").innerHTML = "This article leans to the left.";
     }
@@ -193,6 +220,48 @@ chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
         return syllables ? syllables.length : 0;
       }
 
+      function getImages(callback) {
+        const images = [];
+      
+        // Create an HTTP request to fetch the webpage content
+        const xhr = new XMLHttpRequest();
+        xhr.open('GET', url, true);
+      
+        xhr.onload = function() {
+          if (xhr.status === 200) {
+            // Parse the response text as HTML
+            const parser = new DOMParser();
+            const doc = parser.parseFromString(xhr.responseText, 'text/html');
+      
+            // Find the #main-content container
+            const mainContentContainer = doc.querySelector('#main-content');
+      
+            if (mainContentContainer) {
+              // Find all image elements inside the container
+              const imageElements = mainContentContainer.querySelectorAll('img');
+      
+              if (imageElements.length > 0) {
+                // Extract and store the URLs of all images
+                imageElements.forEach(function(imageElement) {
+                  images.push(imageElement.src);
+                });
+              } else {
+                alert('No images found inside #main-content');
+              }
+            } else {
+              alert('#main-content container not found');
+            }
+          } else {
+            alert('Failed to retrieve the webpage');
+          }
+      
+          // Call the callback function with the populated images array
+          callback(images);
+        };
+      
+        xhr.send();
+      }
+
       //document.getElementById("url").innerHTML = url;
       if (results[0].result == null) {
         document.getElementById("main").style.display = "none";
@@ -202,15 +271,42 @@ chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
         document.getElementById("count").innerHTML = results[0].result.trim().split(/\s+/).length;
         document.getElementById("readtime").innerHTML = readingTime(results[0].result);
         displayFKScore(calculateFleschKincaidReadability(results[0].result));
-        let [res_bias, res_poli] = await getBias(results[0].result);
+
+        /*getImages(async function(images) {
+          // You can now access the populated images array here
+          let myHeaders = new Headers();
+          myHeaders.append("Content-Type", "application/json");
+  
+          const raw = JSON.stringify(images);
+  
+          const requestOptions = {
+            method: 'POST',
+            headers: myHeaders,
+            body: raw,
+            redirect: 'follow'
+          };
+          
+          try {
+            const response = await fetch("http://localhost:3000", requestOptions)
+            const data = await response.json();
+            
+            //alert(JSON.stringify(data));
+          } 
+          catch (error) {
+            console.error(error);
+          }
+        });*/
+        
+        const [res_bias, res_poli] = await getBias(results[0].result);
         displayBias(res_bias);
         displayPoliticalBias(res_poli);
+
       }
     }
   );
 });
 
-//Get content
+//Get content from selected sources
 function getContent(url) {
   let paragraphs;
   if (url.includes("foxnews.com")) {

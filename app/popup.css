@@ -53,7 +53,7 @@ body {
     filter: invert(42%) sepia(0%) saturate(277%) hue-rotate(256deg) brightness(94%) contrast(98%);
 }
 #more {
-    margin-left: 111px;
+    margin-left: 70px;
 }
 p {
     margin-bottom: 0 !important;
@@ -90,7 +90,7 @@ p {
     width: 250px;
     height: 200px;
 }
-#biasPage {
+#biasPage, #imgPage {
     display: none;
 }
 #noContent {
