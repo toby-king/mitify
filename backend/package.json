@@ -1,15 +1,6 @@
 {
-  "name": "mitifyplus",
-  "version": "1.0.0",
-  "description": "mitifyplus backend",
-  "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node index.js"
-  },
-  "author": "Toby King",
-  "license": "ISC",
+  "type": "module",
   "dependencies": {
-    "puppeteer": "^21.3.8"
+    "@postlight/parser": "^2.2.3"
   }
 }
